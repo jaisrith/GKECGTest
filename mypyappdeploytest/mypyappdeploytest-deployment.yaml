@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mypyappdeploytest
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mypyappdeploytest
+      env: preprod
+  template:
+    metadata:
+      labels:
+        app: mypyappdeploytest
+        env: preprod
+    spec:
+      containers:
+        - name: mypyappdeploytest
+          image: gcr.io/mybillinguserproject-292707/mypyappdeploytest:blue
+          ports:
+            - name: web
+              containerPort: 8888
