@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multipod1
+  labels:
+    app: web1
+spec:
+  volumes:
+    - name: shared-data
+      emptyDir: {}
+  containers:
+    - name: nginx1
+      image: nginx
+      ports:
+        - name: web
+          containerPort: 80
+      volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/html
+    - name: ftpserver1
+      image: fauria/vsftpd
+      volumeMounts:
+        - name: shared-data
+          mountPath: /pod-data
+      env:
+        - name: FTP_USER
+          value: admin
+        - name: FTP_PASS
+          value: password
