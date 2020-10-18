@@ -3,8 +3,8 @@ import tornado.web
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        title = "Hello GKE!!"
-        bgcolor = "limegreen"
+        title = "DANGER"
+        bgcolor = "darkred"
         self.render("template.html",title=title,bgcolor=bgcolor)
         print(self.request)
 
