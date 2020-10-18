@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  mypyappdeploytest-service
+spec:
+  selector:
+    app: mypyappdeploytest
+    env: preprod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8888
+  type: LoadBalancer
