@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook
+      env: preprod
+  template:
+    metadata:
+      labels:
+        app: guestbook
+        env: preprod
+    spec:
+      containers:
+        - name: guestbook
+          image: gcr.io/google-samples/gb-frontend:v4
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+          ports:
+            - containerPort: 80
