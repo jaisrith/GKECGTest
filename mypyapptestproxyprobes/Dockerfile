@@ -1,8 +1,8 @@
 FROM python:3.5
 
-COPY . /app1
+COPY . /app
 
-WORKDIR /app1
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mypyappdeploytest
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mypyappdeploytest
+      env: preprod
+  template:
+    metadata:
+      labels:
+        app: mypyappdeploytest
+        env: preprod
+    spec:
+      containers:
+        - name: mypyappdeploytest
+          image: gcr.io/mybillinguserproject-292707/mypyappdeploytest:blue
+          ports:
+            - name: web
+              containerPort: 8888
+        - name: cloud-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.17
+          command: 
+            - /cloud_sql_proxy
+            - -instances=mybillinguserproject-292707:us-central1:mypyappinstance=tcp:3306
+            - -credential_file=/secrets/cloudsql/cloudsqlproxycreds.json
+          securityContext:
+            runAsUser: 2
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: cloudsqlproxycreds
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: cloudsqlproxycreds
+          secret:
+            secretName: cloudsqlproxycreds
