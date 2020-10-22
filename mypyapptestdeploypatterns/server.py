@@ -4,8 +4,8 @@ import pymysql
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        title = "DANGER"
-        bgcolor = "darkred"
+        title = "Hello version1"
+        bgcolor = "indigo"
         self.render("template.html",title=title,bgcolor=bgcolor)
         print(self.request)
 
